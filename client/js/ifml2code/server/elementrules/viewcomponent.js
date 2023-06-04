@@ -85,7 +85,9 @@ exports.rules = [
                         };
                     })
                     .value(),
-                fields = element.attributes.fields,
+                fields = element.attributes.fields.map(function (field) {
+                return field.label;
+            }),
                 obj = {};
             obj[tid + '-view'] = {children: id + '-pug'};
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/form.pug.ejs')({id: id, name: name, fields: fields, events: events})};
@@ -126,6 +128,50 @@ exports.rules = [
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/details.pug.ejs')({id: id, name: name, fields: fields, events: events})};
             obj[tid + '-viewmodel'] = {children: id + '-js'};
             obj[id + '-js'] = {name: id + '.js', content: require('./templates/details.js.ejs')({id: id, incomings: incomings, collection: collection, fields: fields, events: events})};
+            return obj;
+        }
+    ),
+    // Cypress rules
+    createRule(
+        function (element, model) {
+            return model.isViewComponent(element) && element.attributes.stereotype === 'form';
+        },
+        function (element, model) {
+            var id = model.toId(element),
+                name = element.attributes.name,
+                top = model.getTopLevelAncestor(element),
+                tid = top.id,
+                incomings = _.chain(model.getInbounds(id))
+                    .filter(function (id) { return model.isDataFlow(id); })
+                    .map(function (id) { return model.toElement(id); })
+                    .map(function (flow) {
+                        var source = model.getSource(flow);
+                        return {source: source.id, type: source.attributes.stereotype, bindings: flow.attributes.bindings };
+                    })
+                    .value(),
+                events = _.chain(model.getChildren(id))
+                    .filter(function (id) { return model.isEvent(id); })
+                    .filter(function (id) { return model.getOutbounds(id).length; })
+                    .map(function (id) { return model.toElement(id); })
+                    .map(function (event) {
+                        var flow = model.toElement(model.getOutbounds(event)[0]),
+                            target = model.getTarget(flow);
+                        return {
+                            id: model.toId(event),
+                            name: event.attributes.name,
+                            target: model.toId(target),
+                            targetsAction: model.isAction(target),
+                            type: model.isAction(target) ? 'action' : target.attributes.stereotype,
+                            bindings: flow.attributes.bindings
+                        };
+                    })
+                    .value(),
+                fields = element.attributes.fields.map(function (field) {
+                return field.label;
+            }),
+                obj = {};
+            obj[tid + '-specs'] = {children: id + '-cypress-test'};
+            obj[id + '-cypress-test'] = { name: id + '.spec.js', content: require('./templates/form-cypress-test.js.ejs')({ id: id, incomings: incomings, name: name, fields: fields, events: events})};
             return obj;
         }
     ),

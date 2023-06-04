@@ -66,13 +66,13 @@ exports.rules = [
                 'views-index': {name: 'index.pug', content: require('./templates/views.index.pug.ejs')({landmarks: landmarks})},
                 'viewmodels-index': {name: 'index.js', content: require('./templates/viewmodels.index.js.ejs')({vms: vms})},
                 'repositories-index': {name: 'index.js', content: require('./templates/repositories.index.js.ejs')({collections: collections})},
-                'cypress': {isFolder: true, name: 'cypress', children: ['fixtures','support']},
-                //'e2e': {isFolder: true, name: 'e2e'},
+                'cypress': {isFolder: true, name: 'cypress', children: ['fixtures','support', 'specs']},
+                'specs': {isFolder: true,name: 'specs'},
                 'fixtures': {isFolder: true, name: 'fixtures',children: 'example'},
                 'example': {name: 'example.json',content: require('./templates/cypress/example.json.ejs')()},
                 'support': {isFolder: true,name: 'support',children: ['commands', 'e2e']},
-                'commands' :  {name: 'commands.js', content: require('./templates/cypress/commands.js.ejs')()},
-                'e2e': {name: 'e2e.js.ejs',content: require('./templates/cypress/e2e.js.ejs')()}           
+                'commands' : {name: 'commands.js', content: require('./templates/cypress/commands.js.ejs')()},
+                'e2e': {name: 'e2e.js',content: require('./templates/cypress/e2e.js.ejs')()}           
             };
         }
     ),
