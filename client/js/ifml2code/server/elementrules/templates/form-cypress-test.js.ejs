@@ -1,8 +1,8 @@
 // Exemplo de template EJS
-`
+
 describe('<%= name %>', function () {
     beforeEach(function () {
-        cy.visit('/'); // URL da página que contém o formulário
+        cy.visit('http://localhost:3001/'); // URL da página que contém o formulário
     });
 
     it('Preenche o formulário e envia', function () {
@@ -14,4 +14,4 @@ describe('<%= name %>', function () {
         <% } -%>
     });
 });
-`
+

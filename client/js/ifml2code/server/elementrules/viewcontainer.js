@@ -28,10 +28,12 @@ exports.rules = [
                     routes: {children: id + '-route'},
                     views: {children: id + '-view'},
                     viewmodels: {children: id + '-viewmodel'},
+                    cypress: {children:id + '-specs'},
                 };
             obj[id + '-route'] = {isFolder: true, name: id, children: id + '-route-index'};
             obj[id + '-route-index'] = {name: 'index.js', content: require('./templates/route.page.index.js.ejs')({id: id})};
             obj[id + '-view'] = {isFolder: true, name: id, children: id + '-view-index'};
+            obj[id + '-specs'] = {isFolder: true, name: id};
             obj[id + '-view-index'] = {name: 'index.pug', content: require('./templates/view.index.pug.ejs')({id: id, name: name})};
             obj[id + '-viewmodel'] = {isFolder: true, name: id, children: id + '-viewmodel-index'};
             obj[id + '-viewmodel-index'] = {name: 'index.js', content: require('./templates/viewmodel.index.js.ejs')({main: id, descendants: descendants})};

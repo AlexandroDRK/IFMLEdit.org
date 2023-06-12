@@ -171,7 +171,8 @@ exports.rules = [
             }),
                 obj = {};
             obj[tid + '-specs'] = {children: id + '-cypress-test'};
-            obj[id + '-cypress-test'] = { name: id + '.spec.js', content: require('./templates/form-cypress-test.js.ejs')({ id: id, incomings: incomings, name: name, fields: fields, events: events})};
+            obj[id + '-cypress-test'] = { name: id + '.cy.js', content: require('./templates/form-cypress-test.js.ejs')({ id: id, incomings: incomings, name: name, fields: fields, events: events})};
+            console.log(obj)
             return obj;
         }
     ),
