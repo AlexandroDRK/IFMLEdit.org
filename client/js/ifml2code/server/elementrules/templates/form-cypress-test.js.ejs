@@ -1,17 +1,14 @@
-// Exemplo de template EJS
-
 describe('<%= name %>', function () {
-    beforeEach(function () {
-        cy.visit('http://localhost:3001/'); // URL da página que contém o formulário
-    });
+  beforeEach(function () {
+    cy.visit('http://localhost:3001/'); // URL da página que contém o formulário
+  });
 
-    it('Preenche o formulário e envia', function () {
-        <% for (var i = 0; i < fields.length; ++i) { -%>
-        cy.get('[name="<%= id %>$f$<%= fields[i] %>"]').type('Valor do campo <%= fields[i] %>');
-        <% } -%>
-        <% if (events.length > 0) { -%>
-        cy.get('#<%= events[0].id %>').click();
-        <% } -%>
-    });
+  it('Preenche o formulário e envia', function () {
+    <% for (var i = 0; i < fields.length; ++i) { -%>
+    cy.get('[name="<%= id %>$f$"]').eq(<%= i %>).type('Valor do campo <%= fields[i] %>');
+    <% } -%>
+    <% if (events.length > 0) { -%>
+    cy.get('#<%= events[0].id %>').click();
+    <% } -%>
+  });
 });
-
