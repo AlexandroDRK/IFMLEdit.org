@@ -93,6 +93,7 @@ exports.rules = [
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/form.pug.ejs')({id: id, name: name, fields: fields, events: events})};
             obj[tid + '-viewmodel'] = {children: id + '-view-js'};
             obj[id + '-view-js'] = {name: id + '.js', content: require('./templates/form.js.ejs')({id: id, incomings: incomings, fields: fields, events: events})};
+            console.log(obj)
             return obj;
         }
     ),

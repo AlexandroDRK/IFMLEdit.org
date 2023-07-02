@@ -7,8 +7,9 @@ describe('<%= name %>', function () {
     <% for (var i = 0; i < fields.length; ++i) { -%>
     cy.get('[name="<%= id %>$f$"]').eq(<%= i %>).type('Valor do campo <%= fields[i] %>');
     <% } -%>
-    <% if (events.length > 0) { -%>
-    cy.get('#<%= events[0].id %>').click();
+    <% if (events.length > 0) { -%> 
+    cy.get('[name="<%= events[0].id %>"]').click();
     <% } -%>
+    cy.get('.btn.btn-secondary').click();
   });
 });
