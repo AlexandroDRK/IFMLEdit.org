@@ -50,6 +50,9 @@ exports.rules = [
             obj[id + '-pug'] = {name: id + '.pug', content: require('./templates/list.pug.ejs')({id: id, name: name, fields: fields, events: events, selection: selection})};
             obj[tid + '-viewmodel'] = {children: id + '-view-js'};
             obj[id + '-view-js'] = {name: id + '.js', content: require('./templates/list.js.ejs')({id: id, incomings: incomings, collection: collection, fields: fields, filters: filters, events: unfilteredevents, selection: selection, path: path, toplevel: tid})};
+            obj[tid + '-specs'] = {children: id + '-cypress-test'};
+            obj[id + '-cypress-test'] = { name: id + '.cy.js', content: require('./templates/list-cypress-test.js.ejs')({id: id, name: name, fields: fields, events: events, selection: selection})};
+            console.log(obj);
             return obj;
         }
     ),

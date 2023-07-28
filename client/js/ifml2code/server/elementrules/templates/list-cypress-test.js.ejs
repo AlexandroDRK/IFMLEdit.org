@@ -1,0 +1,29 @@
+// list-cypress-test.js
+
+describe('Teste da lista gerada', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3001/');
+  });
+
+  it('Verifica se a lista é exibida corretamente', () => {
+    cy.get('#<%= id %>.container').should('be.visible');
+    cy.get('#<%= id %> thead').should('be.visible');
+    cy.get('#<%= id %> th').should('be.visible');
+    cy.get('#<%= id %> tbody').should('be.visible');
+    //cy.get('<%= id %> table thead tr th').should('have.length', <%= fields.length + 1 %>);
+    //cy.get('<%= id %> table tbody tr').should('have.length', <%= id %>.items.length);
+  });
+
+  it('Verifica se os itens da lista são exibidos corretamente', () => {
+    cy.get('<%= id %>table tbody tr').each(($row, index) => {
+      cy.wrap($row).find('th').eq(0).should('contain.text', <%= id %>.items[index].id);
+      <% fields.forEach(function(field, fieldIndex) { %>
+        cy.wrap($row).find('td').eq(<%= fieldIndex %>).should('contain.text', <%= id %>.items[index].<%= field %>);
+      <% }); %>
+    });
+  });
+
+  it('Verifica se as ações da lista funcionam corretamente', () => {
+    //
+  });
+});
