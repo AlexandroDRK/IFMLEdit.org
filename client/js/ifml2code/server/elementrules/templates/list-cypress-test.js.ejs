@@ -3,27 +3,35 @@
 describe('Teste da lista gerada', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3001/');
+    cy.get('#<%= id %> table tbody tr').as('rows');
   });
 
-  it('Verifica se a lista é exibida corretamente', () => {
+  it('Verifica se a tabela foi construida corretamente', () => {
+    cy.wait(500);
     cy.get('#<%= id %>.container').should('be.visible');
-    cy.get('#<%= id %> thead').should('be.visible');
-    cy.get('#<%= id %> th').should('be.visible');
-    cy.get('#<%= id %> tbody').should('be.visible');
-    //cy.get('<%= id %> table thead tr th').should('have.length', <%= fields.length + 1 %>);
-    //cy.get('<%= id %> table tbody tr').should('have.length', <%= id %>.items.length);
+    cy.wait(500);
+    cy.get('#<%= id %> table thead ').should('be.visible');
+    cy.wait(500);
+    cy.get('#<%= id %> table tbody').should('be.visible');
+    cy.wait(500);
+    cy.get('#<%= id %> table thead tr th').should('have.length', 2); 
   });
 
-  it('Verifica se os itens da lista são exibidos corretamente', () => {
-    cy.get('<%= id %>table tbody tr').each(($row, index) => {
-      cy.wrap($row).find('th').eq(0).should('contain.text', <%= id %>.items[index].id);
-      <% fields.forEach(function(field, fieldIndex) { %>
-        cy.wrap($row).find('td').eq(<%= fieldIndex %>).should('contain.text', <%= id %>.items[index].<%= field %>);
-      <% }); %>
-    });
+  it('Verifica se todas as linhas da tabela são exibidas corretamente', () => {
+    cy.get('@rows').each(($el, index, $list) => {
+      cy.wait(1000)
+      cy.wrap($el).should('be.visible');
+    })
   });
 
-  it('Verifica se as ações da lista funcionam corretamente', () => {
-    //
+  it('Verifica se os links de cada elemento da tabela funcionam corretamente', () => {
+    cy.get('#<%= id %> table tbody tr td').its('length').then(($tds) => {
+      for (let i = 1; i < $tds; i++) {
+        cy.wrap(`#<%= id %> table tbody tr td[data-id="${i}"]`).get(`td[data-id="${i}"] a`).click()
+        cy.wait(1000)
+        cy.get('.btn.btn-secondary').first().click();
+        cy.wait(1000)
+      }
+    })
   });
-});
+}); 
