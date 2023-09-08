@@ -11,6 +11,6 @@
                     input(type='hidden', name=name, value=value)
                 button.col-2.btn.btn.btn-secondary <%= events[i].name %>
 <%    } else { -%>
-            a.col-2.btn.btn.btn-secondary(href=vm['<%= events[i].id %>'].href) <%= events[i].name %>
+            a.col-2.btn.btn.btn-secondary(href=vm['<%= events[i].id %>'].href, data-cy = '<%= id %>.<%= events[i].name %>') <%= events[i].name %>
 <%    }
    } -%>

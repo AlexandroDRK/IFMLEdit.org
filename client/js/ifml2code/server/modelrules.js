@@ -51,7 +51,7 @@ exports.rules = [
                     .value();
             return {
                 '': {isFolder: true, children: 'webexample'},
-                'webexample' : { isFolder: true, name: 'webexample', children: ['gulp', 'package', 'index', 'routes', 'actions', 'views', 'viewmodels', 'repositories', 'gitignore']},
+                'webexample' : { isFolder: true, name: 'webexample', children: ['gulp', 'package', 'index', 'routes', 'actions', 'views', 'viewmodels', 'repositories', 'cypress','gitignore']},
                 'gulp': {name: 'gulpfile.js', content: require('./templates/gulpfile.js.ejs')()},
                 'gitignore': {name: '.gitignore', content: require('./templates/gitignore.ejs')()},
                 'index': {name: 'index.js', content: require('./templates/index.js.ejs')()},
@@ -65,7 +65,14 @@ exports.rules = [
                 'actions-index': {name: 'index.js', content: require('./templates/actions.index.js.ejs')({actions: actions})},
                 'views-index': {name: 'index.pug', content: require('./templates/views.index.pug.ejs')({landmarks: landmarks})},
                 'viewmodels-index': {name: 'index.js', content: require('./templates/viewmodels.index.js.ejs')({vms: vms})},
-                'repositories-index': {name: 'index.js', content: require('./templates/repositories.index.js.ejs')({collections: collections})}
+                'repositories-index': {name: 'index.js', content: require('./templates/repositories.index.js.ejs')({collections: collections})},
+                'cypress': {isFolder: true, name: 'cypress', children: ['fixtures','support', 'specs']},
+                'specs': {isFolder: true,name: 'e2e'},
+                'fixtures': {isFolder: true, name: 'fixtures',children: 'example'},
+                'example': {name: 'example.json',content: require('./templates/cypress/example.json.ejs')()},
+                'support': {isFolder: true,name: 'support',children: ['commands', 'e2e']},
+                'commands' : {name: 'commands.js', content: require('./templates/cypress/commands.js.ejs')()},
+                'e2e': {name: 'e2e.js',content: require('./templates/cypress/e2e.js.ejs')()}           
             };
         }
     ),

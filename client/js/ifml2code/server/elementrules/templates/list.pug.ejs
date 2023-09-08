@@ -1,6 +1,6 @@
-#<%= id %>.container
+#<%= id %>.container(data-table = '<%= tid %>.child')
     h3 <%= name %>
-    table.table.table-hover.table-sm
+    table#<%= id %>.table.table-hover.table-sm(data-table = '<%= tid %>.child')
         thead
             tr
                 th #
@@ -34,7 +34,7 @@
                         a(href=href)= item.id
 <% }
    for (var i = 0; i < fields.length; ++i) { -%>
-                    td
+                    td(data-id=itemindex + 1)
 
 <%     if (selection && selection.targetsAction) { -%>
                         form(action=action, method="POST")
@@ -46,7 +46,7 @@
 <%     }
    }
    if (events.length) { -%>
-                    td
+                    td(data-id=itemindex + 1)
                         .dropdown
                             button.btn.btn-secondary.dropdown-toggle(type='button', data-toggle='dropdown') Actions
                             ul.dropdown-menu

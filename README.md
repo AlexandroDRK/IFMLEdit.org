@@ -25,3 +25,15 @@ __To stop server__
 ```bash
 npm stop
 ```
+
+## Testing
+
+__To install Cypress on downloaded application folder(webserver only)__
+```bash
+npm install cypress
+```
+
+__To open cypress on downloaded application folder(webserver only)__
+```bash
+npx cypress open
+```
